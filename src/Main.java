@@ -13,12 +13,18 @@ public class Main {
 				doCommand(command);
 				command = sc.nextLine();
 			}
+		} catch(NumberFormatException e) {
+			System.out.println("The value is not a number: "+command );
+		} catch(OperationException e) {
+			System.out.println("The operation is not from 1 to 7: "+command);
+		} catch(OperandException e) {
+			System.out.println("The operand is not 'A' or 'B'.");
 		} catch(Exception e) {
-			System.out.println("Error command.");
+			System.out.println("Unknow exception!!!");
 		}
 	}
 
-	private static void doCommand(String command) {
+	private static void doCommand(String command) throws OperandException, OperationException  {
 		String[] cmd = command.split(" ");
 		int op = Integer.parseInt(cmd[0]);
 		int operand1=0, operand2=0, result=0;
@@ -39,7 +45,7 @@ public class Main {
 				b=value;
 				break;
 			default:
-				break;
+				throw new OperandException();
 			}
 			break;
 		case 2:
@@ -51,7 +57,7 @@ public class Main {
 				System.out.println(b);
 				break;
 			default:
-				break;
+				throw new OperandException();
 			}
 			break;
 		case 3:
@@ -60,19 +66,25 @@ public class Main {
 				operand1 = a;
 			} else if (cmd[1].charAt(0) == 'B') {
 				operand1 = b;
+			} else {
+				throw new OperandException();
 			}
 			
 			if (cmd[2].charAt(0) == 'A') {
 				operand2 = a;
 			} else if (cmd[2].charAt(0) == 'B') {
 				operand2 = b;
-			}
+			} else {
+				throw new OperandException();
+			} 
 			
 			result = operand1+operand2;
 			if (cmd[1].charAt(0) == 'A') {
 				a = result;
 			} else if (cmd[1].charAt(0) == 'B') {
 				b = result;
+			} else {
+				throw new OperandException();
 			}
 			
 			break;
@@ -82,12 +94,16 @@ public class Main {
 				operand1 = a;
 			} else if (cmd[1].charAt(0) == 'B') {
 				operand1 = b;
+			} else {
+				throw new OperandException();
 			}
 			
 			if (cmd[2].charAt(0) == 'A') {
 				operand2 = a;
 			} else if (cmd[2].charAt(0) == 'B') {
 				operand2 = b;
+			} else {
+				throw new OperandException();
 			}
 			
 			result = operand1*operand2;
@@ -95,6 +111,8 @@ public class Main {
 				a = result;
 			} else if (cmd[1].charAt(0) == 'B') {
 				b = result;
+			} else {
+				throw new OperandException();
 			}
 			break;
 		case 5:
@@ -102,12 +120,16 @@ public class Main {
 				operand1 = a;
 			} else if (cmd[1].charAt(0) == 'B') {
 				operand1 = b;
+			} else {
+				throw new OperandException();
 			}
 			
 			if (cmd[2].charAt(0) == 'A') {
 				operand2 = a;
 			} else if (cmd[2].charAt(0) == 'B') {
 				operand2 = b;
+			} else {
+				throw new OperandException();
 			}
 			
 			result = operand1-operand2;
@@ -115,6 +137,8 @@ public class Main {
 				a = result;
 			} else if (cmd[1].charAt(0) == 'B') {
 				b = result;
+			} else {
+				throw new OperandException();
 			}
 			break;
 		case 6:
@@ -122,12 +146,16 @@ public class Main {
 				operand1 = a;
 			} else if (cmd[1].charAt(0) == 'B') {
 				operand1 = b;
+			} else {
+				throw new OperandException();
 			}
 			
 			if (cmd[2].charAt(0) == 'A') {
 				operand2 = a;
 			} else if (cmd[2].charAt(op) == 'B') {
 				operand2 = b;
+			} else {
+				throw new OperandException();
 			}
 			
 			result = operand1/operand2;
@@ -135,14 +163,23 @@ public class Main {
 				a = result;
 			} else if (cmd[1].charAt(0) == 'B') {
 				b = result;
+			} else {
+				throw new OperandException();
 			}
 			break;
 		case 7:
 			break;
 		default:
-			break;
+			throw new OperationException();
 		}
 		
 	}
 
+}
+
+class OperandException extends Exception {
+}
+
+class OperationException extends Exception {
+	
 }
